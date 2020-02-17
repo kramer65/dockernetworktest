@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  common_server:
+    image: ubuntu
+    ports:
+      - 4444:4444
+    command: >
+      bash -c '
+      apt update && apt install netcat -y && 
+      while true; do echo -e "HTTP/1.1 200 OK\n\npong" | nc -k -l -p 4444 -q 1; done'
+    
+  project_a:
+    image: ubuntu
+    depends_on: 
+      - common_server
+    command: >
+      bash -c '
+      apt update && apt install curl -y && 
+      while true; do echo "Calling the container"; curl common_server:4444; sleep 1; done'
