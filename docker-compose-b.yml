@@ -1,9 +1,0 @@
-version: '3'
-
-services:
-  project_b:
-    image: ubuntu
-    command: >
-      bash -c '
-      apt update && apt install curl -y && 
-      while true; do echo "Calling the container"; curl common_server:4444; sleep 1; done'
